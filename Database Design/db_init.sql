@@ -3,21 +3,21 @@ CREATE TABLE product (
     sku VARCHAR(100) NOT NULL UNIQUE,
     name VARCHAR(100) NOT NULL,
     price DECIMAL(9, 2) NOT NULL
-)
+);
 
 
 CREATE TABLE dvd_disc (
     id INT PRIMARY KEY,
     size DECIMAL(9, 2) NOT NULL,
-    FOREIGN KEY (id) REFERENCES product(id)
-)
+    FOREIGN KEY (id) REFERENCES product(id) ON DELETE CASCADE  
+);
 
 
 CREATE TABLE book (
     id INT PRIMARY KEY,
     weight DECIMAL(6, 2) NOT NULL,
-    FOREIGN KEY (id) REFERENCES product(id)
-)
+    FOREIGN KEY (id) REFERENCES product(id) ON DELETE CASCADE  
+);
 
 
 CREATE TABLE furniture (
@@ -25,5 +25,5 @@ CREATE TABLE furniture (
     height DECIMAL(6, 2) NOT NULL,
     width DECIMAL(6, 2) NOT NULL,
     length DECIMAL(6, 2) NOT NULL,
-    FOREIGN KEY (id) REFERENCES product(id)
-)
+    FOREIGN KEY (id) REFERENCES product(id) ON DELETE CASCADE  
+);
