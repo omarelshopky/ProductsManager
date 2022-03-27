@@ -15,23 +15,36 @@
         static public function parse($url, $request)
         {
             $url = trim($url);
+            $explode_url = explode('/', $url);
+            $explode_url = array_slice($explode_url, 1);
             
-            if ($url == "/")
-            {
-                $request->controller = "tasks";
-                $request->action = "index";
-                $request->params = [];
-            }
-            else
-            {
-                $explode_url = explode('/', $url);
-                $explode_url = array_slice($explode_url, 1);
-                
-                $request->controller = $explode_url[0];
-                $request->action = $explode_url[1];
-                $request->params = array_slice($explode_url, 2);
-            }
+            $endpoint = "/" . $explode_url[0];
+            
+            $request->controller = Router::route($endpoint);
+            $request->action = (array_key_exists(1, $explode_url))? $explode_url[1] : "index";
+            $request->params = (array_key_exists(2, $explode_url))? array_slice($explode_url, 2) : []; 
+        }
 
+
+        /**
+         * Handles routing user to the right controller
+         * 
+         * @param string $endpoint user want to hit
+         * 
+         * @return string Controller's name handles this route
+         */
+        static public function route($endpoint) 
+        {
+            switch ($endpoint) {
+                case "/":
+                    return "ListProducts";
+
+                case "/add-product":
+                    return "AddProduct";
+
+                default:
+                    die("404 - Page Not Found.");
+            }
         }
     }
 ?>
