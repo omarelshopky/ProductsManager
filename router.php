@@ -21,8 +21,9 @@
             $endpoint = "/" . $explode_url[0];
             
             $request->controller = Router::route($endpoint);
-            $request->action = (array_key_exists(1, $explode_url))? $explode_url[1] : "index";
-            $request->params = (array_key_exists(2, $explode_url))? array_slice($explode_url, 2) : []; 
+            
+            $request->action = (array_key_exists(1, $explode_url) and $explode_url[1] != "")? $explode_url[1] : "index";
+            $request->params = (array_key_exists(2, $explode_url) and $explode_url[2] != "")? array_slice($explode_url, 2) : []; 
         }
 
 
@@ -37,7 +38,8 @@
         {
             switch ($endpoint) {
                 case "/":
-                    return "ListProducts";
+                case "/product-list":
+                    return "ProductList";
 
                 case "/add-product":
                     return "AddProduct";
