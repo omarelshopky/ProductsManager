@@ -1,5 +1,5 @@
 <?php
-abstract class Product
+class Product
 {
 
     /**
