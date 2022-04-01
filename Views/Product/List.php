@@ -30,7 +30,7 @@
       :key="product.id"
       :product="product"
       :toggle="toggleDelete" 
-    />
+    ></product-card>
   
   </div>
 
