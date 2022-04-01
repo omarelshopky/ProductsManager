@@ -1,11 +1,11 @@
 <?php
 require_once(ROOT . "Models/Product.php");
 
-class DVDDisc extends Product
+class DVD extends Product
 {
 
     /**
-     * Inserts a new DVD Disc to db
+     * Inserts a new DVD to db
      * 
      * @param string $sku unique identifier for each product
      * @param string $name of the inserted product
@@ -51,12 +51,12 @@ class DVDDisc extends Product
     /**
      * Gets a line containing the DVD Dics Size detials
      * 
-     * @param array $dvddisc wanted to extract its size
+     * @param array $dvd wanted to extract its size
      * 
      * @return string the size of the DVD Disc in MB
      */
-    public function getDetails($dvddisc){
-        return "Size: " . $dvddisc["size"] . " MB";
+    public function getDetails($dvd){
+        return "Size: " . $dvd["size"] . " MB";
     }
 }
 ?>
