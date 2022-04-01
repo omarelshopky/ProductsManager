@@ -41,7 +41,7 @@ class Furniture extends Product
      * @return string the dimension of thefurniture in HxWxL format
      */
     public function getDetails($furniture){
-        return "Dimension: " . $furniture["height"] . "x" . $furniture["width"] . "x" . $furniture["length"];
+        return "Dimension: " . (int)$furniture["height"] . "x" . (int)$furniture["width"] . "x" . (int)$furniture["length"];
     }
 }
 ?>

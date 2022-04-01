@@ -40,7 +40,7 @@ class Book extends Product
      * @return string the weight of the book in KG
      */
     public function getDetails($book){
-        return "Weight: " . $book["weight"] . "KG";
+        return "Weight: " . (int)$book["weight"] . "KG";
     }
 }
 ?>

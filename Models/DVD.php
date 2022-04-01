@@ -40,7 +40,7 @@ class DVD extends Product
      * @return string the size of the DVD Disc in MB
      */
     public function getDetails($dvd){
-        return "Size: " . $dvd["size"] . " MB";
+        return "Size: " . (int)$dvd["size"] . " MB";
     }
 }
 ?>
