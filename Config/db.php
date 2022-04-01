@@ -14,7 +14,7 @@ class Database
     public static function getBdd() {
         
         if(is_null(self::$bdd)) {
-            self::$bdd = new PDO("mysql:host=".$GLOBALS["config"]["DB_HOST"].";dbname=".$GLOBALS["config"]["DB_NAME"], $GLOBALS["config"]["DB_USER"], $GLOBALS["config"]["DB_PASS"]);
+            self::$bdd = new PDO("mysql:host=".$GLOBALS["DB_HOST"].";dbname=".$GLOBALS["DB_NAME"], $GLOBALS["DB_USER"], $GLOBALS["DB_PASS"]);
         }
 
         return self::$bdd;

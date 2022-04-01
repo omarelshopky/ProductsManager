@@ -1,5 +1,5 @@
 <?php
-$config = parse_ini_file(ROOT . "Config/config.ini");
+extract(parse_ini_file(ROOT . "Config/config.ini")); // Load configs
 
 require(ROOT . "Config/db.php");
 require(ROOT . "Core/Controller.php");
