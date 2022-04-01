@@ -1,5 +1,5 @@
 <?php
-class Product
+abstract class Product
 {
 
     /**
@@ -84,5 +84,15 @@ class Product
         $req->execute();
         return $req->fetch()['id'];
     }
+
+
+    /**
+     * Gets a line containing the product detials
+     * 
+     * @param array $product wanted to extract its details
+     * 
+     * @return string line of the product detials
+     */
+    abstract public function getDetails($product);
 }
 ?>

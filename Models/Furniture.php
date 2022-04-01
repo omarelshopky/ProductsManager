@@ -1,8 +1,8 @@
 <?php
+require_once(ROOT . "Models/Product.php");
+
 class Furniture extends Product
 {
-    static private $tableName = "furniture";
-
 
     /**
      * Inserts a new Furniture to db
@@ -18,7 +18,8 @@ class Furniture extends Product
      */
     public function create($sku, $name, $price, $height, $width, $length)
     {
-        $this->insertGeneralInformation($sku, $name, $price, Furniture::$tableName);
+        // static::class used to use the class name as the product type
+        $this->insertGeneralInformation($sku, $name, $price, static::class);
 
         $id = $this->getLastProductId();
 
@@ -43,7 +44,7 @@ class Furniture extends Product
      */
     public function get($id)
     {
-        return $this->join($id, Furniture::$tableName);
+        return $this->join($id, static::class);
     }
 
 
@@ -56,7 +57,19 @@ class Furniture extends Product
      */
     public function getAll()
     {
-        return $this->joinAll(Furniture::$tableName);
+        return $this->joinAll(static::class);
+    }
+
+
+    /**
+     * Gets a line containing the furniture dimension detials
+     * 
+     * @param array $furniture wanted to extract its dimension
+     * 
+     * @return string the dimension of thefurniture in HxWxL format
+     */
+    public function getDetails($furniture){
+        return "Dimension: " . $furniture["height"] . "x" . $furniture["width"] . "x" . $furniture["length"];
     }
 }
 ?>

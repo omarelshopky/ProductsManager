@@ -1,7 +1,8 @@
 <?php
+require_once(ROOT . "Models/Product.php");
+
 class Book extends Product
 {
-    static private $tableName = "book";
     
     /**
      * Inserts a new Book to db
@@ -15,7 +16,7 @@ class Book extends Product
      */
     public function create($sku, $name, $price, $weight)
     {
-        $this->insertGeneralInformation($sku, $name, $price, Book::$tableName);
+        $this->insertGeneralInformation($sku, $name, $price, static::class);
 
         $id = $this->getLastProductId();
 
@@ -38,7 +39,7 @@ class Book extends Product
      */
     public function get($id)
     {
-        return $this->join($id, Book::$tableName);
+        return $this->join($id, static::class);
     }
 
 
@@ -51,7 +52,19 @@ class Book extends Product
      */
     public function getAll()
     {
-        return $this->joinAll(Book::$tableName);
+        return $this->joinAll(static::class);
+    }
+
+
+    /**
+     * Gets a line containing the book weight detials
+     * 
+     * @param array $book wanted to extract its weight
+     * 
+     * @return string the weight of the book in KG
+     */
+    public function getDetails($book){
+        return "Weight: " . $book["weight"] . "KG";
     }
 }
 ?>

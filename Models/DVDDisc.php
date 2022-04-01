@@ -1,7 +1,8 @@
 <?php
+require_once(ROOT . "Models/Product.php");
+
 class DVDDisc extends Product
 {
-    static private $tableName = "dvd_disc";
 
     /**
      * Inserts a new DVD Disc to db
@@ -15,7 +16,7 @@ class DVDDisc extends Product
      */
     public function create($sku, $name, $price, $size)
     {
-        $this->insertGeneralInformation($sku, $name, $price, DVDDisc::$tableName);
+        $this->insertGeneralInformation($sku, $name, $price, static::class);
 
         $id = $this->getLastProductId();
 
@@ -38,7 +39,7 @@ class DVDDisc extends Product
      */
     public function get($id)
     {
-        return $this->join($id, DVDDisc::$tableName);
+        return $this->join($id, static::class);
     }
 
 
@@ -51,7 +52,19 @@ class DVDDisc extends Product
      */
     public function getAll()
     {
-        return $this->joinAll(DVDDisc::$tableName);
+        return $this->joinAll(static::class);
+    }
+
+
+    /**
+     * Gets a line containing the DVD Dics Size detials
+     * 
+     * @param array $dvddisc wanted to extract its size
+     * 
+     * @return string the size of the DVD Disc in MB
+     */
+    public function getDetails($dvddisc){
+        return "Size: " . $dvddisc["size"] . " MB";
     }
 }
 ?>

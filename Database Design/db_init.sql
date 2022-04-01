@@ -3,13 +3,13 @@ CREATE TABLE product (
     sku VARCHAR(100) NOT NULL UNIQUE,
     name VARCHAR(100) NOT NULL,
     price DECIMAL(9, 2) NOT NULL,
-    type ENUM ('dvd_disc','book','furniture'),
+    type ENUM ('DVDDisc','Book','Furniture'),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 
-CREATE TABLE dvd_disc (
+CREATE TABLE dvddisc (
     id INT PRIMARY KEY,
     size DECIMAL(9, 2) NOT NULL,
     FOREIGN KEY (id) REFERENCES product(id) ON DELETE CASCADE  
