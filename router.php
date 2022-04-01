@@ -15,15 +15,14 @@
         static public function parse($url, $request)
         {
             $url = trim($url);
-            $explode_url = explode('/', $url);
-            $explode_url = array_slice($explode_url, 1);
+            $url_components = explode('/', $url);
+            $url_components = array_slice($url_components, 1);
             
-            $endpoint = "/" . $explode_url[0];
-            
-            $request->controller = Router::route($endpoint);
-            
-            $request->action = (array_key_exists(1, $explode_url) and $explode_url[1] != "")? $explode_url[1] : "index";
-            $request->params = (array_key_exists(2, $explode_url) and $explode_url[2] != "")? array_slice($explode_url, 2) : []; 
+            $route = Router::route($url_components);
+
+            $request->controller = $route["controller"];
+            $request->action = $route["action"];
+            $request->params = $route["params"]; 
         }
 
 
@@ -34,16 +33,32 @@
          * 
          * @return string Controller's name handles this route
          */
-        static public function route($endpoint) 
+        static public function route($url_components) 
         {
-            switch ($endpoint) {
-                case "/":
-                case "/product-list":
-                    return "ProductList";
+            switch ($url_components[0]) {
+                case "":
+                    return array(
+                        "controller" => "Product",
+                        "action" => "list",
+                        "params" => []
+                    );
+                
+                case "add-product":
+                    return array(
+                        "controller" => "Product",
+                        "action" => "add",
+                        "params" => []
+                    );
 
-                case "/add-product":
-                    return "AddProduct";
-
+                case "api":
+                    switch (@$url_components[1]) {
+                        case "delete-product":
+                            return array(
+                                "controller" => "Product",
+                                "action" => "delete",
+                                "params" => [@$url_components[2], @$url_components[3]]
+                            );
+                    }
                 default:
                     die("404 - Page Not Found.");
             }
