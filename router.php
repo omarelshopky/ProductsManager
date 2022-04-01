@@ -27,11 +27,11 @@
 
 
         /**
-         * Handles routing user to the right controller
+         * Handles routing user to the right controller without calling function according to user input
          * 
-         * @param string $endpoint user want to hit
+         * @param string $url_components user hitted
          * 
-         * @return string Controller's name handles this route
+         * @return array contains controller, action and params handles this route
          */
         static public function route($url_components) 
         {
@@ -51,12 +51,16 @@
                     );
 
                 case "api":
+                    // Enable only POST requests for this resources
+                    if ($_SERVER['REQUEST_METHOD'] != "POST")
+                        header("Location: /");
+                        
                     switch (@$url_components[1]) {
                         case "delete-product":
                             return array(
                                 "controller" => "Product",
                                 "action" => "delete",
-                                "params" => [@$url_components[2], @$url_components[3]]
+                                "params" => []
                             );
                     }
                 default:
