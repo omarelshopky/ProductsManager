@@ -3,23 +3,7 @@ require_once(ROOT . "Models/Product.php");
 
 class DVD extends Product
 {
-
-    /**
-     * Inserts a new DVD to db
-     * 
-     * @param string $sku unique identifier for each product
-     * @param string $name of the inserted product
-     * @param number $price of the inserted product
-     * @param number $size of the DVD file in MB
-     * 
-     * @return bool execution status true if success and false in faild
-     */
-    public function add($sku, $name, $price, $size)
-    {
-        return $this->insertProduct($sku, $name, $price, static::class, [
-            "size" => $size
-        ]);
-    }
+    static public $attributes = ["size"];
 
 
     /**

@@ -1,6 +1,7 @@
 <?php
 abstract class Product extends Model
 {
+    static public $attributes = ["sku", "name", "price", "type"];
     
     /**
      * Inserts new product from specific type to db
@@ -13,17 +14,12 @@ abstract class Product extends Model
      * 
      * @return bool execution status true if success and false in faild
      */
-    protected function insertProduct($sku, $name, $price, $type, $data)
+    public function add($data)
     {
-        $state = $this->insert(static::class, array(
-            "sku" => $sku,
-            "name" => $name,
-            "price" => $price,
-            "type" => $type
-        ));
+        $state = $this->insert("Product", $data);
 
         if ($state) {
-            return $this->insert($type, array_merge($data, ["id" => $this->getLastProductId()])); 
+            return $this->insert($data["type"], array_merge($data, ["id" => $this->getLastProductId()])); 
         } else
             return false;
     }
@@ -98,5 +94,21 @@ abstract class Product extends Model
      * @return string line of the product detials
      */
     abstract public function getDetails($product);
+
+
+    /**
+     * Checks whether there is a product has this sku or not
+     * 
+     * @param string $sku to be checked
+     * 
+     * @return bool true if there is a product with this sku, and false if not
+     */
+    public function checkSKU($sku) {
+        $sql = "SELECT * FROM product WHERE sku = ?";
+        $req = Database::getBdd()->prepare($sql);
+        $req->execute([$sku]);
+
+        return !empty($req->fetchAll());
+    }
 }
 ?>

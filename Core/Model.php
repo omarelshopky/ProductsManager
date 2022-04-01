@@ -11,11 +11,22 @@ abstract class Model
      */
     protected function insert($tablename, $data) {
 
-        $sql = "INSERT INTO " . $tablename . " (" . join(", ", array_keys($data)) . ") VALUES (:". join(", :", array_keys($data)) . ")";
+        $attributes = $tablename::$attributes;
+        
+        if (in_array("id", array_keys($data), true)) 
+            array_push($attributes, "id");
+
+        $sql = "INSERT INTO " . $tablename . " (" . join(", ", $attributes) . ") VALUES (:". join(", :", $attributes) . ")";
 
         $req = Database::getBdd()->prepare($sql);
 
-        return $req->execute($data);
+        // Create associative array of attributes
+        $submited = array();
+        foreach ($attributes as $attribute) {
+            $submited[$attribute] = $data[$attribute];
+        }
+
+        return $req->execute($submited);
     }
 }
 ?>

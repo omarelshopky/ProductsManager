@@ -3,23 +3,7 @@ require_once(ROOT . "Models/Product.php");
 
 class Book extends Product
 {
-    
-    /**
-     * Inserts a new Book to db
-     * 
-     * @param string $sku unique identifier for each product
-     * @param string $name of the inserted product
-     * @param number $price of the inserted product
-     * @param number $weight of the Book in KG
-     * 
-     * @return bool execution status true if success and false in faild
-     */
-    public function add($sku, $name, $price, $weight)
-    {
-        return $this->insertProduct($sku, $name, $price, static::class, [
-            "weight" => $weight
-        ]);
-    }
+    static public $attributes = ["weight"];
 
 
     /**
