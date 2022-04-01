@@ -3,46 +3,26 @@ class ProductListController extends Controller
 {
     function index()
     {
-        require(ROOT . "Models/Product.php");
         require(ROOT . "Models/Book.php");
         require(ROOT . "Models/DVDDisc.php");
         require(ROOT . "Models/Furniture.php");
 
-        $books = new Book();
-        $dvdDiscs = new DVDDisc();
-        $furnitures = new Furniture();
-
         $data["products"] = array();
+         
+        foreach ($GLOBALS["PRODUCT_TYPES"] as $type) {
 
-        foreach ($books->getAll() as $book) {
-            $data["products"][$book["id"]] = array(
-                "id" => $book["id"],
-                "sku" => $book["sku"],
-                "name" => $book["name"],
-                "price" => $book["price"],
-                "details" => "Weight: " . $book["weight"] . "KG"
-            );
-        }
-
-        foreach ($dvdDiscs->getAll() as $dvdDisc) {
-            $data["products"][$dvdDisc["id"]] = array(
-                "id" => $dvdDisc["id"],
-                "sku" => $dvdDisc["sku"],
-                "name" => $dvdDisc["name"],
-                "price" => $dvdDisc["price"],
-                "details" => "Size: " . $dvdDisc["size"] . " MB"
-            );
-        }
-
-        foreach ($furnitures->getAll() as $furniture) {
-            $data["products"][$furniture["id"]] = array(
-                "id" => $furniture["id"],
-                "sku" => $furniture["sku"],
-                "name" => $furniture["name"],
-                "price" => $furniture["price"],
-                "details" => "Dimension: " . $furniture["height"] . "x" . $furniture["width"] . "x" . $furniture["length"]
-            );
-        }
+            $products = new $type();
+            foreach ($products->getAll() as $product) {
+                $data["products"][$product["id"]] = array(
+                    "id" => $product["id"],
+                    "sku" => $product["sku"],
+                    "name" => $product["name"],
+                    "price" => $product["price"],
+                    "type" => $product["type"],
+                    "details" => $products->getDetails($product)
+                );
+            }
+        };
         
         ksort($data["products"]); // Sort products according to ID
         
@@ -53,14 +33,16 @@ class ProductListController extends Controller
     }
     
     
-    function delete($id=-1)
+    function delete($productType="", $id=-1)
     {
-        require(ROOT . "Models/Product.php");
+        // Prevent LFI and RFI
+        if(!in_array($productType, $GLOBALS["PRODUCT_TYPES"], true) || $id === -1)
+            header("Location: /");
 
-        if ($id != -1) {
-            $product = new Product();
-            $product->delete($id);
-        } 
+        require(ROOT . "Models/".$productType.".php");
+        
+        $product = new $productType();
+        $product->delete($id);
         
         header("Location: /");
     }

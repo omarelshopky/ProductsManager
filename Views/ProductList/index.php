@@ -59,7 +59,7 @@
         },
         deleteProducts() {
           this.deletables.forEach((id) => {
-            fetch(window.location.origin + window.location.pathname + "product-list/delete/"+id)
+            fetch(window.location.origin + window.location.pathname + "product-list/delete/"+this.products[id].type+"/"+id)
             delete this.products[id]
           })
           
