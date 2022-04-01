@@ -14,21 +14,12 @@ class Furniture extends Product
      * @param number $width of the Furniture in CM
      * @param number $length of the Furniture in CM
      * 
-     * @return object execution result
+     * @return bool execution status true if success and false in faild
      */
-    public function create($sku, $name, $price, $height, $width, $length)
+    public function add($sku, $name, $price, $height, $width, $length)
     {
-        // static::class used to use the class name as the product type
-        $this->insertGeneralInformation($sku, $name, $price, static::class);
-
-        $id = $this->getLastProductId();
-
-        $sql = "INSERT INTO book (id, height, width, length) VALUES (:id, :height, :width, :length)";
-        $req = Database::getBdd()->prepare($sql);
-
-        return $req->execute([
-            'id' => $id,
-            'height' => $height,
+        return $this->insertProduct($sku, $name, $price, static::class, [
+            "height" => $height,
             "width" => $width,
             "length" => $length
         ]);

@@ -12,20 +12,12 @@ class DVDDisc extends Product
      * @param number $price of the inserted product
      * @param number $size of the DVD file in MB
      * 
-     * @return object execution result
+     * @return bool execution status true if success and false in faild
      */
-    public function create($sku, $name, $price, $size)
+    public function add($sku, $name, $price, $size)
     {
-        $this->insertGeneralInformation($sku, $name, $price, static::class);
-
-        $id = $this->getLastProductId();
-
-        $sql = "INSERT INTO dvd_disc (id, size) VALUES (:id, :size)";
-        $req = Database::getBdd()->prepare($sql);
-
-        return $req->execute([
-            'id' => $id,
-            'size' => $size
+        return $this->insertProduct($sku, $name, $price, static::class, [
+            "size" => $size
         ]);
     }
 

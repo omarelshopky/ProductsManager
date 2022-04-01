@@ -1,27 +1,31 @@
 <?php
-abstract class Product
+abstract class Product extends Model
 {
-
+    
     /**
-     * Inserts the general information of a new product to db
+     * Inserts new product from specific type to db
      * 
      * @param string $sku unique identifier for each product
      * @param string $name of the inserted product
      * @param number $price of the inserted product
+     * @param string $type of the product 
+     * @param array $data associated to this product type
      * 
-     * @return object execution result
+     * @return bool execution status true if success and false in faild
      */
-    protected function insertGeneralInformation($sku, $name, $price, $type)
+    protected function insertProduct($sku, $name, $price, $type, $data)
     {
-        $sql = "INSERT INTO product (sku, name, price, type) VALUES (:sku, :name, :price, :type)";
-
-        $req = Database::getBdd()->prepare($sql);
-
-        return $req->execute([
+        $state = $this->insert(static::class, array(
             "sku" => $sku,
             "name" => $name,
-            "price" => $price
-        ]);
+            "price" => $price,
+            "type" => $type
+        ));
+
+        if ($state) {
+            return $this->insert($type, array_merge($data, ["id" => $this->getLastProductId()])); 
+        } else
+            return false;
     }
 
 
@@ -77,7 +81,7 @@ abstract class Product
      * 
      * @return string the last product's ID
      */
-    protected function getLastProductId()
+    private function getLastProductId()
     {
         $sql = "SELECT * FROM product ORDER BY id DESC LIMIT 1";
         $req = Database::getBdd()->prepare($sql);

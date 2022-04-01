@@ -12,20 +12,12 @@ class Book extends Product
      * @param number $price of the inserted product
      * @param number $weight of the Book in KG
      * 
-     * @return object execution result
+     * @return bool execution status true if success and false in faild
      */
-    public function create($sku, $name, $price, $weight)
+    public function add($sku, $name, $price, $weight)
     {
-        $this->insertGeneralInformation($sku, $name, $price, static::class);
-
-        $id = $this->getLastProductId();
-
-        $sql = "INSERT INTO book (id, weight) VALUES (:id, :weight)";
-        $req = Database::getBdd()->prepare($sql);
-
-        return $req->execute([
-            'id' => $id,
-            'weight' => $weight
+        return $this->insertProduct($sku, $name, $price, static::class, [
+            "weight" => $weight
         ]);
     }
 

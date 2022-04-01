@@ -1,5 +1,5 @@
 <?php
-    class Controller
+    abstract class Controller
     {
         var $vars = [];
         var $layout = "default";
