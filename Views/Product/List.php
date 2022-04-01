@@ -8,14 +8,14 @@
 
   <div class="d-flex flex-row justify-content-between col-md-12">
 
-    <h1 class="page-header"> Product List </h1>
+    <h1 class="page-header"> <?php echo $title; ?> </h1>
 
     <div class="page-btn-container">
 
       <a href="/add-product/" class="btn btn-info m-3"> ADD </a>
 
-      <a v-if="deletables.length" href="" @click.prevent="deleteProducts" class="btn btn-danger m-3" id="delete-prduct-btn"> MASS DELETE </a>
-      <a v-else href="" class="btn btn-danger m-3 disabled" id="delete-prduct-btn"> MASS DELETE </a>
+      <a v-if="deletables.length" href="" @click.prevent="deleteProducts" class="btn btn-danger m-3" id="delete-product-btn"> MASS DELETE </a>
+      <a v-else href="" class="btn btn-danger m-3 disabled" id="delete-product-btn"> MASS DELETE </a>
 
     </div>
 
@@ -59,7 +59,18 @@
         },
         deleteProducts() {
           this.deletables.forEach((id) => {
-            fetch(window.location.origin + window.location.pathname + "product-list/delete/"+this.products[id].type+"/"+id)
+
+            fetch(window.location.origin + window.location.pathname + "api/delete-product/", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ 
+                product_type: this.products[id].type,
+                id: id 
+              })
+            })
+              .then(response => response.json())
+              .then(data => (this.state = data.msg));
+              
             delete this.products[id]
           })
           
