@@ -43,7 +43,60 @@
 
 
         /**
-         * Filters inputs cames from the user
+         * Gets the missing parameter for specific function use POST requests
+         * 
+         * @param array $data want to check if have a missing parts
+         * @param array $paramHeaders needed for the function
+         * 
+         * @return array contains the missing headers
+         */
+        private function getMissingParameters($data, $paramHeaders) {
+            $missingParameter = array();
+            
+            foreach ($paramHeaders as $parameter) {
+                if (!array_key_exists($parameter, $data))
+                    array_push($missingParameter, $parameter);     
+            }
+            
+            return $missingParameter;
+        }
+
+
+        /**
+         * Handles general validation done to accept a post request
+         * 
+         * @param array $paramHeader needed for the requested process
+         * 
+         * @return array $data sent in the request body
+         */
+        protected function handlePostRequest($paramHeader) {
+
+            // Takes the body data from the request
+            $data = json_decode(file_get_contents('php://input'), true);
+            
+            if (is_null($data)){
+                echo json_encode(array(
+                    "msg" => "Invalid JSON Format"
+                ));
+                return;
+            }
+            
+            // Check if there any missing parameters
+            $missingParameters = $this->getMissingParameters($data, $paramHeader);
+
+            if (count($missingParameters) > 0) {
+                echo json_encode(array(
+                    "msg" => "Missing Parameters: " . join(", ", $missingParameters)
+                ));
+                return;
+            }
+
+            return $this->secure_form($data);
+        }
+
+
+        /**
+         * Filters mallisious special characters from the user input
          * 
          * @param string $data user provide as an input
          * 
@@ -59,18 +112,20 @@
 
 
         /**
-         * Filters each input in a form data
+         * Conducts filters on each entity in a data array
          * 
-         * @param array $form of data want to be filtered
+         * @param array $data came from the user input
          * 
-         * @return void
+         * @return array the data array after conduct the filters
          */
-        protected function secure_form($form)
+        protected function secure_form($data)
         {
-            foreach ($form as $key => $value)
+            foreach ($data as $key => $value)
             {
-                $form[$key] = $this->secure_input($value);
+                $data[$key] = $this->secure_input($value);
             }
+
+            return $data;
         }
 
     }
