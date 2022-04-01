@@ -50,7 +50,7 @@
          * 
          * @return array contains the missing headers
          */
-        private function getMissingParameters($data, $paramHeaders) {
+        protected function getMissingParameters($data, $paramHeaders) {
             $missingParameter = array();
             
             foreach ($paramHeaders as $parameter) {
@@ -128,5 +128,25 @@
             return $data;
         }
 
+
+        /**
+         * Check the numeric state for specifi attributes in data array
+         * 
+         * @param array $data to be checked in
+         * @param array $attributes to be checked for
+         * 
+         * @return array for the attributes are not numeric
+         */
+        protected function checkNumericState($data, $attributes) {
+            $hasNumericProblem = array();
+            
+            foreach ($attributes as $attribute) {
+                if (!is_numeric($data[$attribute])){
+                    array_push($hasNumericProblem, $attribute);
+                }
+            }
+
+            return $hasNumericProblem;
+        }
     }
 ?>
