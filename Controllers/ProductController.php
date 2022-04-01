@@ -65,42 +65,77 @@ class ProductController extends Controller
 
     function add() 
     {
-        
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+
+            require_once(ROOT . "Models/Product.php");
+
+            $data = $this->handlePostRequest(Product::$attributes);
+            if (is_null($data)) return;
+
+            // Check the product type to Prevent LFI and RFI
+            if(!in_array($data["type"], $GLOBALS["PRODUCT_TYPES"], true)) {
+                echo json_encode(array(
+                    "msg" => "Invalid Product Type"
+                ));
+                return;
+            }
+            require(ROOT . "Models/".$data["type"].".php");
+            $product = new $data["type"]();
+
+            // Check if there any missing parameters for this product type
+            $missingParameters = $this->getMissingParameters($data, $data["type"]::$attributes);
+
+            if (count($missingParameters) > 0) {
+                echo json_encode(array(
+                    "msg" => "Missing Parameters: " . join(", ", $missingParameters)
+                ));
+                return;
+            }
+
+            // Check the SKU uniqness 
+            if ($product->checkSKU($data["sku"])) {
+                echo json_encode(array(
+                    "msg" => "SKU Must be Unique for each product"
+                ));
+                return;
+            }
+
+            // Check numeric state of the product attributes
+            $hasNumericProblem = $this->checkNumericState($data, array_merge($data["type"]::$attributes, ["price"]) );
+            if (count($hasNumericProblem) > 0) {
+                echo json_encode(array(
+                    "msg" => "Invalid Numeric Parameters: " . join(", ", $hasNumericProblem)
+                ));
+                return;
+            }
+
+            // Check Name and SKU Length
+            if (strlen($data["name"]) > 200) {
+                echo json_encode(array(
+                    "msg" => "Name can be 200 char maximum"
+                ));
+                return;
+            }
+            if (strlen($data["sku"]) > 100) {
+                echo json_encode(array(
+                    "msg" => "SKU can be 100 char maximum"
+                ));
+                return;
+            }
+
+            // Add new product to db
+            $state = $product->add($data);
+
+            echo json_encode(array(
+                "msg" => $state
+            ));
+
+        } else {
+            $data["title"] = "Product Add";
+            
+            $this->set($data);
+            $this->render("Add");
+        }
     }
-
-    // function create()
-    // {
-    //     if (isset($_POST["title"]))
-    //     {
-    //         require(ROOT . "Models/Task.php");
-
-    //         $task= new Task();
-
-    //         if ($task->create($_POST["title"], $_POST["description"]))
-    //         {
-    //             header("Location: " . WEBROOT . "tasks/index");
-    //         }
-    //     }
-
-    //     $this->render("create");
-    // }
-
-    // function edit($id)
-    // {
-    //     require(ROOT . "Models/Task.php");
-    //     $task= new Task();
-
-    //     $d["task"] = $task->showTask($id);
-
-    //     if (isset($_POST["title"]))
-    //     {
-    //         if ($task->edit($id, $_POST["title"], $_POST["description"]))
-    //         {
-    //             header("Location: " . WEBROOT . "tasks/index");
-    //         }
-    //     }
-    //     $this->set($d);
-    //     $this->render("edit");
-    // }
 }
 ?>
