@@ -60,7 +60,7 @@
         deleteProducts() {
           this.deletables.forEach((id) => {
 
-            fetch(window.location.origin + window.location.pathname + "api/delete-product/", {
+            fetch(window.location.origin + "/api/delete-product/", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ 
