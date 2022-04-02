@@ -1,9 +1,3 @@
-<style>
-  .page-header {
-      text-align: left;
-  }
-</style>
-
 <div id="app" v-cloak>
 
   <div class="d-flex flex-row justify-content-between col-md-12">

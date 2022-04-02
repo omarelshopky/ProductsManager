@@ -6,31 +6,11 @@
 
     <title><?php echo $title; ?></title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/public/assets/style/GeneralStyle.css" rel="stylesheet">
 
     <style>
-        #app {
-            padding: 3rem 1.5rem;
-            text-align: center;
-        }
-
         [v-cloak] {
             display: none;
-        }
-
-        #page-container {
-            position: relative;
-            min-height: 100vh;
-        }
-
-        #content-wrap {
-            padding-bottom: 4.5rem;    /* Footer height */
-        }
-
-        #footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 4.5rem;            /* Footer height */
         }
     </style>
 </head>
