@@ -128,7 +128,7 @@
         this.productTypeFeedback = ""
       },
       updateValue(inputId, value) {
-        product = (this.product[inputId])? this.product[inputId] : this.productsDetails[this.productType].attributes[inputId]
+        let product = (this.product[inputId])? this.product[inputId] : this.productsDetails[this.productType].attributes[inputId]
         product.value = value
         let input = document.querySelector("#" + inputId)
         
@@ -153,9 +153,9 @@
               this.productTypeFeedback = "Please choose a valid type."
 
             }else {
-              product = (this.product[key])? this.product[key] : this.productsDetails[this.productType].attributes[key]
+              let product = (this.product[key])? this.product[key] : this.productsDetails[this.productType].attributes[key]
               document.querySelector("#" + key).classList.add("is-invalid")
-
+              
               if (product.type === "number") {
                 product.feedback = `Please, provide numeric ${key}.`
               }else{
@@ -174,13 +174,13 @@
           price: this.product.price.value,
           type: this.productType
         }
-
+        
         if (data.type != ""){
           for (const key in this.productsDetails[this.productType].attributes) {
             data[key] = this.productsDetails[this.productType].attributes[key].value
           }
         }
-
+        
         if (this.validate(data)){
           fetch(window.location.origin + "/add-product/", {
             method: "POST",
