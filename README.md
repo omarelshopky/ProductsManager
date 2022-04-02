@@ -20,7 +20,7 @@ These are the listed mandatory technical requirements:
   - For OOP you would need to demonstrate code structuring in meaningful classes that extend each other, so we would like to see an abstract class for the main product logic. Please take a look at the polymorphism provision.
   - Also, MySQL logic should be handled by objects with properties instead of direct column values. Please use setters and getters for achieving this and don't forget to use them for both save and display logic.
 - Meet PSR standards ([https://www.php-fig.org](https://www.php-fig.org/)) [DONE]
-- Avoid using conditional statements for handling differences in product types 
+- Avoid using conditional statements for handling differences in product types [DONE]
   - This means you should avoid any if-else and switch-case statements which are used to handle any difference between products.
 - Do not use different endpoints for different products types. There should be 1 general endpoint for product saving [DONE]
 - PHP: ^7.0, plain classes, no frameworks, OOP approach [USED]
@@ -75,18 +75,18 @@ This page should open once button "ADD" is pressed, and should be accessible by:
 
 [Open full size image](https://docs.google.com/document/d/1wu2J2Jp4KAYEVyQ6B7KSGFp_7oeDttH7DwOPLMARfws/edit)
 
-### The page should display a form with id: #product_form, with the following fields
+### The page should display a form with id: #product_form, with the following fields [DONE]
 
 - SKU (id: #sku)
 - Name (id: #name)
 - Price (id: #price)
 
-- Product type switcher (id: #productType) with following options:
+- Product type switcher (id: #productType) with following options: [DONE]
   - DVD (can be value or text)
   - Book (can be value or text)
   - Furniture (can be value or text)
 
-- Product type-specific attribute
+- Product type-specific attribute [DONE]
   - Size input field (in MB) for DVD-disc should have an ID: #size
   - Weight input field (in Kg) for Book should have an ID: #weight
   - Each from Dimensions input fields (HxWxL) for Furniture should have an appropriate ID:
@@ -98,12 +98,12 @@ This page should open once button "ADD" is pressed, and should be accessible by:
 
 ### **Add product page requirements:**
 
-- The form should be dynamically changed when the type is switched
-- Special attributes should have a description, related to their type, e.g.: “Please, provide dimensions” / “Please, provide weight” / “Please, provide size” when related product type is selected
-- All fields are mandatory for submission, missing values should trigger notification “Please, submit required data”
-- Implement input field value validation, invalid data must trigger notification “Please, provide the data of indicated type”
-- Notification messages should appear on the same page without reloading
-- The page must have a “Save” button to save the product. Once saved, return to the “Product List” page with the new product added.
-- The page must have a “Cancel” button to cancel adding the product action. Once canceled, returned to the “Product List” page with no new products added. [DONE]
-- No additional dialogues like “Are you sure you want to Save / Cancel?”
+- The form should be dynamically changed when the type is switched [DONE]
+- Special attributes should have a description, related to their type, e.g.: “Please, provide dimensions” / “Please, provide weight” / “Please, provide size” when related product type is selected [DONE]
+- All fields are mandatory for submission, missing values should trigger notification “Please, submit required data”[DONE]
+- Implement input field value validation, invalid data must trigger notification “Please, provide the data of indicated type” [DONE]
+- Notification messages should appear on the same page without reloading [DONE]
+- The page must have a “Save” button to save the product. Once saved, return to the “Product List” page with the new product added. [DONE]
+- The page must have a “Cancel” button to cancel adding the product action. Once canceled, returned to the “Product List” page with no new  products added. [DONE]
+- No additional dialogues like “Are you sure you want to Save / Cancel?” [DONE]
 
