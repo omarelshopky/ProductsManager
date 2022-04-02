@@ -34,7 +34,7 @@ abstract class Product extends Model
      * @return object An object map the product details
      */
     protected function join($id, $tableName) {
-        $sql = "SELECT * FROM product p INNER JOIN " . $tableName . " ON p.id = " . $tableName . ".id = ?";
+        $sql = "SELECT * FROM product p INNER JOIN " . strtolower($tableName) . " ON p.id = " . $tableName . ".id = ?";
         $req = Database::getBdd()->prepare($sql);
         $req->execute([$id]);
         return $req->fetch();
@@ -50,7 +50,7 @@ abstract class Product extends Model
      * @return object An object map the product details
      */
     protected function joinAll($tableName) {
-        $sql = "SELECT * FROM product p INNER JOIN " . $tableName . " ON p.id = " . $tableName . ".id";
+        $sql = "SELECT * FROM product p INNER JOIN " . strtolower($tableName) . " ON p.id = " . $tableName . ".id";
         $req = Database::getBdd()->prepare($sql);
         $req->execute([]);
         return $req->fetchAll();

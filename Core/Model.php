@@ -16,7 +16,7 @@ abstract class Model
         if (in_array("id", array_keys($data), true)) 
             array_push($attributes, "id");
 
-        $sql = "INSERT INTO " . $tablename . " (" . join(", ", $attributes) . ") VALUES (:". join(", :", $attributes) . ")";
+        $sql = "INSERT INTO " . strtolower($tablename) . " (" . join(", ", $attributes) . ") VALUES (:". join(", :", $attributes) . ")";
 
         $req = Database::getBdd()->prepare($sql);
 
