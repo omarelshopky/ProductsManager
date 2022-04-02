@@ -1,0 +1,52 @@
+{
+    "Book": {
+        "attributes": {
+            "weight": {
+                "name": "weight",
+                "label": "Weight (KG)",
+                "type": "number",
+                "value": "",
+                "feedback": ""
+            }
+        },
+        "description": "Please, provide weight in KG"
+    },
+    "DVD": {
+        "attributes": {
+            "size": {
+                "name": "size",
+                "label": "Size (MB)",
+                "type": "number",
+                "value": "",
+                "feedback": ""
+            }
+        },
+        "description": "Please, provide size in MB"
+    },
+    "Furniture": {
+        "attributes": {
+            "height": {
+                "name": "height",
+                "label": "Height (CM)",
+                "type": "number",
+                "value": "",
+                "feedback": ""
+            },
+            "width": {
+                "name": "width",
+                "label": "Width (CM)",
+                "type": "number",
+                "value": "",
+                "feedback": ""
+            },
+            "length": {
+                "name": "length",
+                "label": "Length (CM)",
+                "type": "number",
+                "value": "",
+                "feedback": ""
+            }
+        },
+        "description": "Please, provide dimensions in HxWxL format"
+    }
+}
